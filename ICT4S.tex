@@ -60,11 +60,7 @@ Fax: xx}}
 \maketitle
 
 Energy consumed by data centres in 2010 accounted for between 1.1\% and 1.5\% of the total electricity consumed worldwide~\cite{Koomey2011}, making of data centre energy ma\-nagement an important challenge for researchers.
-Contemporary research focused on reducing the overall energy consumption through dedicated Virtual Machine (VM) placement algorithms~\cite{dupont-eenergy12}.
-Such algorithms consider the data centre and the workload characteristics to place the VMs among the servers in the most energy-efficient way.
-The placement occurs respecting the Service Level Agreements (SLAs) existing between the data centre and its customers.
-
-With the recent adoption of renewable energies to power data centres, the research community enlarges its vision to associate with purely \emph{quantitative} energy consumption reduction, the notion of \emph{quality} of the energy consumed, \ie\ the capacity to rely as much as possible on sustainable power sources~\cite{parasol-sigplan2013}.
+With the recent adoption of renewable energies to power data centres~\cite{parasol-sigplan2013}, the research community enlarges its vision to associate with purely \emph{quantitative} energy consumption reduction, the notion of \emph{quality} of the energy consumed, \ie\ the capacity to rely as much as possible on sustainable power sources.
 Differently from non-renewable energy sources, the availability of renewable energies is very volatile and time dependent: \eg\ solar power is obtainable only during the day, and is subject to variations due to the meteorological conditions.
 The goal in this case is to shift the workload of running applications, according to the forecasted availability.
 
@@ -81,13 +77,8 @@ The goal in this case is to shift the workload of running applications, accordin
   \vspace{-1em}
 \end{figure}
 
-There is broad agreement that future Smart Cities will depend on IT services that are more and more hosted inside the city.
-To maintain a high quality of living inside these cities, the eco-friendliness of data centres relying on local power sources is of high importance.
-In this poster, we introduce the initial concepts of DC4Cities, a FP7 project that aims to make data centres more efficient according to the availability of renewable energies, thus better suited for the integration in Smart Cities.
-To reach this objective, DC4Cities will propose workload scheduling techniques tightly coupled with energy-adaptive applications that can reconfigure themselves according to power budgets (see Figure~\ref{fig:adapt}).
-Combining the two aspects opens up new challenges for the research in the field of energy efficient data centres.
 
-The scenario that we want to support through our research envisions that an external entity located inside a Smart City, called the Energy Management Authority (EMA), will be able to set high-level energy and power objectives for a data centre.
+The scenario that we want to support through our research envisions that an entity external to the data centre, called the Energy Management Authority (EMA), will be able to set high-level energy and power objectives for the data centre.
 For example, an objective could be: \enquote{at least 80\% of the data centre energy consumption has to be generated from renewable energy sources}.
 To translate these high-level objectives into concrete actions performed in the data centre, the platform developed by DC4Cities will need to be informed about the current and future renewable energy availability.
 To this end, the DC4Cities platform will receive forecasts regarding the amount of available power and the energy source mix of its electricity inputs.
@@ -95,8 +86,20 @@ These forecasts can be either provided directly by the power suppliers or create
 Having both workload estimations for the different running applications~\cite{Kansal2008} and the energy forecasts, DC4Cities will be able to assign specific power budgets to the different applications.
 The applications, in turn, will have to choose their specific working mode to respect the power budget and the SLAs.
 
+We introduce the concept of Energy Aware Software Controller (EASC).
+%initial concepts of DC4Cities, a FP7 project that aims to make data centres more efficient according to the availability of renewable energies.
+The EASC implements workload scheduling techniques tightly coupled with energy-adaptive applications that can reconfigure themselves according to power budgets (see Figure~\ref{fig:adapt}).
+Each EASC receives a power budget, corresponding to the expected power consumed by the controlled application.
+The EASC is then proposing several plans to perform the application's tasks.
+Those plans can be controlled using two weighting parameters: the aggressiveness and the eagerness.
+The aggressiveness controls the possibility for the application to consume more or less  aggressively the renewable energies.
+That is to say, to run at the highest performance level when renewable energies are available, and at the lowest performance when they are not.
+The eagerness controls the necessity for an application to perform its tasks early, regardless of the availability of the renewables.
+The EASCs are coordinated centrally by the central component of the DC4Cities prototype.
+This central component coordinates the EASCs and select the correct plan for each EASC, in order to optimize their combination.
+
 Managing the applications specific workload requires to include in the picture not only the virtual infrastructure layer (IaaS layer) of a data centre, but, as well, the virtual application layer (PaaS layer).
-Thus, DC4Cities will extend the VM consolidation techniques to the application layer by: (i) managing elasticity and scalability of multi-tier applications according to their energy footprint (\emph{energy-awareness}); (ii) injecting mechanisms in the single applications to negotiate energy usage according to energy constraints (\emph{energy-adaptiveness}).
+The EASC is able to: (i) manage elasticity and scalability of multi-tier applications according to their energy footprint (\emph{energy-awareness}); (ii) inject mechanisms in the single applications to negotiate energy usage according to energy constraints (\emph{energy-adaptiveness}).
 
 The combination of the above techniques will allow:
 \begin{itemize}
@@ -106,25 +109,8 @@ The combination of the above techniques will allow:
   \item automatic splitting and scheduling of system management activities depending on their energy footprint and their level of criticality.
 \end{itemize}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.99\linewidth]{figs/highlevel}
-  \caption{High level architecture}
-  \label{fig:architecture}
-\end{figure}
-
-The figure~\ref{fig:architecture} provides the high level view of the interactions in the architecture proposed by DC4Cities. The actors can be subdivided in three categories: 
-\begin{itemize}
-  \item The traditional and renewable energy providers, together with the authorities managing Smart City energy plans, represented in the top row.
-  \item The DC4Cities data centre and the data centre energy aware sub-systems, in the lower row.
-  \item The DC4Cities Data Centre Energy Controller, represented in the middle of the figure, has a pivotal role: on one side it communicates with the energy providers through the \emph{Renewable Energy Adaptive Interface} (upper interface), and on the other side it communicates with the data centre subsystems through the \emph{Energy Adaptive Data Centre Operation Interface} (lower interface). 
-\end{itemize}
-The DC4Cities platform will use the upper interface to retrieve informations on renewable energy availability from the respective providers, and will receive energy constraint directives from the EMA and the Smart Grid.
-Then, based on the energy availability and constraints, the data centre policies will allow to define, consolidate, optimize and finally enact the energy plans in collaboration with the lower energy adaptive sub-systems. 
-
-New metrics will be developed for the needs of the project, specifically in relation with the energy used in the application domain.
-Those metrics will be proposed to standardization bodies.
-Finally, the solutions proposed by DC4Cities will be trialled in three different environments: two publicly owned data centres in the city of Barcelona, Spain, and the data centre of the health agency of the province of Trento, Italy.
+The solutions proposed by DC4Cities has notably been trialled in the data centre of the health agency of the province of Trento, Italy.
+Using our prototype, the percentage of renewable energy consumed by the data centre (called REN\%) went from 43.1\% up to 57.9\%. 
 
 
 \section{Acknowledgments}
